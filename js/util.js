@@ -4,10 +4,8 @@ const getRandomInteger = function(min, max) {
     const result = min - 0.5 + Math.random() * (max - min + 1);
     return Math.round(result);
   }
-  console.log('Диапазон значений указан неправильно');
+  throw new Error('Диапазон значений указан неправильно');
 };
-
-console.log(getRandomInteger(12, 99));
 
 // Источник формулы для расчета переменной result: https://learn.javascript.ru/task/random-int-min-max
 
@@ -17,10 +15,8 @@ const getRandomFloatNumber = function(min, max, numberDecimals) {
     result = parseFloat(result.toFixed(numberDecimals));
     return result;
   }
-  console.log('Диапазон значений указан неправильно');
+  throw new Error('Диапазон значений указан неправильно');
 };
-
-console.log(getRandomFloatNumber(1.11, 1.12, 4));
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
