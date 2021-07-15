@@ -23,7 +23,8 @@ const renderTest = function(announcement) {
   const offerType = announcementCard.querySelector('.popup__type'); // тип жилья
   const offerCapacity = announcementCard.querySelector('.popup__text--capacity'); // вместимость
   const offerTime = announcementCard.querySelector('.popup__text--time'); // время
-  const offerFeatures = announcementCard.querySelector('.popup__features'); // удобства
+  const offerFeatures = announcementCard.querySelector('.popup__features'); // блок с удобствами
+  const offerFeature = offerFeatures.querySelector('.popup__feature'); // удобство
   const offerDescription = announcementCard.querySelector('.popup__description'); // описание
   const offerPhotos = announcementCard.querySelector('.popup__photos'); // блок с фото
   const offerPhoto = offerPhotos.querySelector('.popup__photo'); // фото
@@ -35,10 +36,16 @@ const renderTest = function(announcement) {
   offerType.textContent = typesRus[announcement.offer.type];
   offerCapacity.textContent = `${announcement.offer.rooms} комнаты для ${announcement.offer.guests} гостей`;
   offerTime.textContent = `Заезд после ${announcement.offer.checkin}, выезд до ${announcement.offer.checkout}`;
-  offerFeatures.textContent = announcement.offer.features;
+
+  announcement.offer.features.forEach((featureName) => { // удобства
+    const singleFeature = offerFeature.cloneNode(true);
+    singleFeature.value = featureName;
+    offerFeatures.appendChild(singleFeature);
+  });
+
   offerDescription.textContent = announcement.offer.description;
 
-  announcement.offer.photos.forEach((urlPhoto) => {
+  announcement.offer.photos.forEach((urlPhoto) => { // фото
     const singlePhoto = offerPhoto.cloneNode(true);
     singlePhoto.src = urlPhoto;
     offerPhotos.appendChild(singlePhoto);
@@ -51,13 +58,14 @@ const renderTest = function(announcement) {
       announcementCard.children[i].classList.add('visually-hidden');
     }
   }
-  
+
   mapCanvas.appendChild(announcementCard);  // добавляем объявление в контейнер
 };
 
 renderTest(similarAnnouncements[0]);
 
-/*
+/*offerFeatures.textContent = announcement.offer.features;
+
 for (let i = 0; i < announcement.offer.photos.length; i++) {  // добавляем фотографии
     offerPhotos.createElement(announcement.offer.photos[i]);
   }
