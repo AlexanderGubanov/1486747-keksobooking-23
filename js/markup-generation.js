@@ -23,8 +23,8 @@ const renderTest = function(announcement) {
   const offerType = announcementCard.querySelector('.popup__type'); // тип жилья
   const offerCapacity = announcementCard.querySelector('.popup__text--capacity'); // вместимость
   const offerTime = announcementCard.querySelector('.popup__text--time'); // время
-  const offerFeatures = announcementCard.querySelector('.popup__features'); // блок с удобствами
-  const offerFeature = offerFeatures.querySelector('.popup__feature'); // удобство
+  const offerFeaturesTemplate = announcementCard.querySelector('.popup__features'); // блок с удобствами
+  const offerFeatures = offerFeaturesTemplate.querySelectorAll('.popup__feature'); // удобства
   const offerDescription = announcementCard.querySelector('.popup__description'); // описание
   const offerPhotos = announcementCard.querySelector('.popup__photos'); // блок с фото
   const offerPhoto = offerPhotos.querySelector('.popup__photo'); // фото
@@ -37,11 +37,29 @@ const renderTest = function(announcement) {
   offerCapacity.textContent = `${announcement.offer.rooms} комнаты для ${announcement.offer.guests} гостей`;
   offerTime.textContent = `Заезд после ${announcement.offer.checkin}, выезд до ${announcement.offer.checkout}`;
 
-  announcement.offer.features.forEach((featureName) => { // удобства
-    const singleFeature = offerFeature.cloneNode(true);
-    singleFeature.value = featureName;
-    offerFeatures.appendChild(singleFeature);
+  offerFeatures.forEach((element) => {
+    let isFeature = false;
+    announcement.offer.features.forEach((featureName) => {
+      if (element.classList.contains(`popup__feature--${featureName}`)) {
+        isFeature = true;
+      }
+    });
+    if (!isFeature) {
+      element.remove();
+    }
   });
+
+  /*offerFeatures.forEach((element) => {
+    let isFeature = false;
+    announcement.offer.features.forEach((featureName) => {
+      if (element.classList.contains(`popup__feature--${featureName}`)) {
+        isFeature = true;
+      }
+    });
+    if (!isFeature) {
+      element.remove();
+    }
+  });*/
 
   offerDescription.textContent = announcement.offer.description;
 
@@ -76,24 +94,24 @@ announcementCard.children.forEach((cardElement) => {
     }
   });
 
-similarAnnouncements.forEach((announcement) => {  // наполняем карточки объявлений данными из массива 
+similarAnnouncements.forEach((announcement) => {  // наполняем карточки объявлений данными из массива
   offerTitle.textContent = announcement.offer.title;
-  offerAddress.textContent = announcement.offer.address; 
+  offerAddress.textContent = announcement.offer.address;
   offerPrice.textContent = announcement.offer.price + ' ₽/ночь';
   offerType.textContent = typesRus[announcement.offer.type];
-  offerCapacity.textContent = announcement.offer.rooms + ' комнаты для ' + announcement.offer.guests + ' гостей'; 
+  offerCapacity.textContent = announcement.offer.rooms + ' комнаты для ' + announcement.offer.guests + ' гостей';
   offerTime.textContent = 'Заезд после ' + announcement.offer.checkin + ', выезд до ' + announcement.offer.checkout;
   offerFeatures.textContent = announcement.offer.features;
   offerDescription.textContent = announcement.offer.description;
-  
-  for (const i = 0; i < announcement.offer.photos.length; i++) {  // добавляем фотографии 
+
+  for (const i = 0; i < announcement.offer.photos.length; i++) {  // добавляем фотографии
     offerPhotos.createElement(announcement.offer.photos[i]);
   }
 
-  authorAvatar.src = announcement.author.avatar;  // меняем аватарку 
+  authorAvatar.src = announcement.author.avatar;  // меняем аватарку
 
-  for (const i = 0; i < announcementCard.children.length; i++) {  // скрываем блоки, не имеющие содержания  
-    if (announcementCard.children[i] == null) {  
+  for (const i = 0; i < announcementCard.children.length; i++) {  // скрываем блоки, не имеющие содержания
+    if (announcementCard.children[i] == null) {
       announcementCard.children[i].classList.add('visually-hidden');
     }
   }
@@ -103,9 +121,9 @@ similarAnnouncements.forEach((announcement) => {  // наполняем карт
   announcementCard.querySelector('.popup__title').textContent = announcement.offer.title;  // заголовок
   announcementCard.querySelector('.popup__text--address').textContent = announcement.offer.address; // адрес
   announcementCard.querySelector('.popup__text--price').textContent = announcement.offer.price + ' ₽/ночь'; // цена
-  announcementCard.querySelector('.popup__type').textContent = announcement.offer.type; // тип жилья 
-  announcementCard.querySelector('.popup__capacity').textContent = announcement.offer.rooms + ' комнаты для ' + announcement.offer.guests + ' гостей'; // тип жилья 
-  announcementCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + announcement.offer.checkin + ', выезд до ' + announcement.offer.checkout; //  
+  announcementCard.querySelector('.popup__type').textContent = announcement.offer.type; // тип жилья
+  announcementCard.querySelector('.popup__capacity').textContent = announcement.offer.rooms + ' комнаты для ' + announcement.offer.guests + ' гостей'; // тип жилья
+  announcementCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + announcement.offer.checkin + ', выезд до ' + announcement.offer.checkout; //
   announcementCard.querySelector('.popup__features').textContent = announcement.offer.features;
   announcementCard.querySelector('.popup__description').textContent = announcement.offer.description;
   announcementCard.querySelector('.popup__photos').textContent = announcement.offer.photos;
