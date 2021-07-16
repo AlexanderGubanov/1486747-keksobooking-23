@@ -21,7 +21,7 @@ const getRandomFloatNumber = function(min, max, numberDecimals) {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const getRandomNonrepeatingElement = (elements) => {
-  const randomInteger = getRandomInteger(0, elements.length - 1);
+  const randomInteger = getRandomInteger(0, elements.length);
   return elements.splice(randomInteger, 1).join();
 };
 

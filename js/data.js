@@ -4,7 +4,7 @@ import {
   getRandomArrayElement,
   getRandomNonrepeatingElement,
   getRandomLengthArray
-} from './util';
+} from './util.js';
 
 const AVATARS = [
   'img/avatars/user01.png',
@@ -66,7 +66,7 @@ const createAnnouncement = () => {
       price: getRandomInteger(1, 1000),
       type: getRandomArrayElement(TYPES),
       rooms: getRandomInteger(1, 10),
-      guests: getRandomInteger(1, 50),
+      guests: getRandomInteger(1, 10),
       checkin: getRandomArrayElement(CHECKINS),
       checkout: getRandomArrayElement(CHECKOUTS),
       features: getRandomLengthArray(FEATURES),
@@ -85,6 +85,6 @@ const createAnnouncement = () => {
   return announcement;
 };
 
-const similarAnnouncement = new Array(SIMILAR_ANNOUNCEMENTS_COUNT).fill(null).map(() => createAnnouncement());
+const getAnnouncements = () => new Array(SIMILAR_ANNOUNCEMENTS_COUNT).fill(null).map(() => createAnnouncement());
 
-similarAnnouncement();
+export {getAnnouncements};
