@@ -49,18 +49,6 @@ const renderTest = function(announcement) {
     }
   });
 
-  /*offerFeatures.forEach((element) => {
-    let isFeature = false;
-    announcement.offer.features.forEach((featureName) => {
-      if (element.classList.contains(`popup__feature--${featureName}`)) {
-        isFeature = true;
-      }
-    });
-    if (!isFeature) {
-      element.remove();
-    }
-  });*/
-
   offerDescription.textContent = announcement.offer.description;
 
   announcement.offer.photos.forEach((urlPhoto) => { // фото
