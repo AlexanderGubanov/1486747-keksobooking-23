@@ -8,11 +8,10 @@ const pricePerNight = document.querySelector('#price');
 const roomsNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 
-/*
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 
-const typeOfHousing = document.querySelector('#type'); // тип жилья
+const typeOfHousing = document.querySelector('#type');
 
 const MIN_PRICE = {
   bungalow: 0,
@@ -21,7 +20,6 @@ const MIN_PRICE = {
   house: 5000,
   palace: 10000,
 };
-*/
 
 /*
 const adForm = document.querySelector('.ad-form');
@@ -63,7 +61,6 @@ pricePerNight.addEventListener('input', () => {
   pricePerNight.reportValidity();
 });
 
-/*
 // Время заезда и выезда
 timeIn.addEventListener('change', () => {
   timeOut.value = timeIn.value;
@@ -72,9 +69,8 @@ timeIn.addEventListener('change', () => {
 timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
-*/
 
-// валидация соответсвия количества гостей количеству комнат 
+// валидация соответствия количества гостей количеству комнат
 roomsNumber.addEventListener('change', () => {
   if (roomsNumber.value === '1') {
     capacity.value = '1';
@@ -110,14 +106,12 @@ capacity.addEventListener('focus', () => {
   }
 });
 
-/*
 // зависимость цены от типа жилья
 typeOfHousing.addEventListener('change', () => {
   const selectedType = MIN_PRICE[typeOfHousing.value];
   pricePerNight.setAttribute('min', selectedType);
   pricePerNight.setAttribute('placeholder', selectedType);
 });
-*/
 
 /*capacity.addEventListener('change', () => {
   if (capacity.value === '3') {
