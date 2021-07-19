@@ -97,6 +97,7 @@ roomsNumber.addEventListener('change', () => {
     capacity.options[0].disabled = true;
     capacity.options[1].disabled = true;
     capacity.options[2].disabled = true;
+    capacity.options[3].disabled = false;
     capacity.value = '0';
   }
 });
@@ -111,7 +112,7 @@ capacity.addEventListener('focus', () => {
 });
 
 /*
-// зависимость цены от типа жилья
+// установление зависимости цены от типа жилья
 typeOfHousing.addEventListener('change', () => {
   const selectedType = MIN_PRICE[typeOfHousing.value];
   pricePerNight.setAttribute('min', selectedType);
@@ -119,30 +120,7 @@ typeOfHousing.addEventListener('change', () => {
 });
 */
 
-/*capacity.addEventListener('change', () => {
-  if (capacity.value === '3') {
-    roomsNumber.options[0].disabled = false;
-    roomsNumber.options[1].disabled = false;
-    roomsNumber.options[2].disabled = false;
-    roomsNumber.options[3].disabled = true;
-  } else if (capacity.value === '2') {
-    roomsNumber.options[0].disabled = false;
-    roomsNumber.options[1].disabled = false;
-    roomsNumber.options[2].disabled = true;
-    roomsNumber.options[3].disabled = true;
-  } else if (capacity.value === '1') {
-    roomsNumber.options[0].disabled = false;
-    roomsNumber.options[1].disabled = true;
-    roomsNumber.options[2].disabled = true;
-    roomsNumber.options[3].disabled = true;
-  } else if (capacity.value === '0') {
-    roomsNumber.options[0].disabled = true;
-    roomsNumber.options[1].disabled = true;
-    roomsNumber.options[2].disabled = true;
-    roomsNumber.options[3].disabled = false;
-  }
-});
-
+/*
 const selectRoomsAndGuests = function(rooms, beds) {
   return function (event) {
     const value = rooms.value;
@@ -194,5 +172,4 @@ const ROOMS_GUESTS_BIJECTION = {
   3: [1, 2, 3],
   100: [0],
 };
-
-}*/
+*/
