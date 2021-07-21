@@ -1,6 +1,6 @@
 import {getAnnouncements} from './data.js';  // импортируем функцию, генерирующую объявления
 
-const card = document.querySelector('#card').content; // находим шаблон
+const card = document.querySelector('#card').content.querySelector('article.popup'); // находим шаблон
 
 //const mapCanvas = document.querySelector('#map-canvas');  // находим контейнер для размещения объявлений
 
@@ -18,7 +18,6 @@ const renderTest = (announcement) => {
   const announcementCard = card.cloneNode(true);  // клонируем шаблон
 
   const offerTitle = announcementCard.querySelector('.popup__title');  // заголовок
-  const offerAddress = announcementCard.querySelector('.popup__text--address'); // адрес
   const offerPrice = announcementCard.querySelector('.popup__text--price'); // цена
   const offerType = announcementCard.querySelector('.popup__type'); // тип жилья
   const offerCapacity = announcementCard.querySelector('.popup__text--capacity'); // вместимость
@@ -31,7 +30,6 @@ const renderTest = (announcement) => {
   const authorAvatar = announcementCard.querySelector('.popup__avatar'); // аватар автора
 
   offerTitle.textContent = announcement.offer.title;
-  offerAddress.textContent = announcement.offer.address;
   offerPrice.textContent = `${announcement.offer.price} ₽/ночь`;
   offerType.textContent = typesRus[announcement.offer.type];
   offerCapacity.textContent = `${announcement.offer.rooms} комнаты для ${announcement.offer.guests} гостей`;
@@ -61,7 +59,7 @@ const renderTest = (announcement) => {
   });
 
   authorAvatar.src = announcement.author.avatar;  // меняем аватарку
-  if (authorAvatar.src === '') {  // проверка на пустоту содержания
+  if (authorAvatar.src === 'http://localhost:3000/') {  // проверка на пустоту содержания
     authorAvatar.classList.add('visually-hidden');
   }
 

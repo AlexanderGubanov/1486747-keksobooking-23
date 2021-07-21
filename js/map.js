@@ -3,14 +3,15 @@ import { activatePage } from './form-activation.js';
 import { similarAnnouncements, renderTest } from './markup-generation.js';
 deactivatePage();
 
+const address = document.querySelector('#address'); // адрес
 const resetButton = document.querySelector('.ad-form__reset');
 
 const map = L.map('map-canvas').on('load', () => {
   activatePage();
 })
   .setView({
-    lat: 35.6895,
-    lng: 139.692,
+    lat: 35.68950,
+    lng: 139.69200,
   }, 10);
 
 L.tileLayer(
@@ -29,8 +30,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6895,
-    lng: 139.692,
+    lat: 35.68950,
+    lng: 139.69200,
   },
   {
     draggable: true,
@@ -38,7 +39,16 @@ const mainPinMarker = L.marker(
   },
 );
 
+address.value = '35.68950, 139.69200';
+
 mainPinMarker.addTo(map);
+
+// передаем новые координаты главной метки в поле "адрес"
+mainPinMarker.on('moveend', (evt) => {
+  const coordinates = evt.target.getLatLng();
+  const {lat, lng} = coordinates;
+  address.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+});
 
 // возвращение метки и карты в изначальное положение после нажатия кнопки "очистить"
 resetButton.addEventListener('click', () => {
