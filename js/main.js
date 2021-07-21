@@ -1,7 +1,7 @@
+import './form-activation.js';
+//import { deactivatePage } from './form-activation.js';
 import './data.js';
 import './markup-generation.js';
-import './form-activation.js';
 import './form-validation.js';
-import { deactivatePage } from './form-activation.js';
-
-//deactivatePage();
+import './map.js';
+//import './../leaflet/leaflet.js';
