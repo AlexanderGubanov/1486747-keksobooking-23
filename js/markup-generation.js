@@ -1,8 +1,8 @@
 import {getAnnouncements} from './data.js';  // импортируем функцию, генерирующую объявления
 
-const card = document.querySelector('#card').content; // находим шаблон
+const card = document.querySelector('#card').content.querySelector('article.popup'); // находим шаблон
 
-const mapCanvas = document.querySelector('#map-canvas');  // находим контейнер для размещения объявлений
+//const mapCanvas = document.querySelector('#map-canvas');  // находим контейнер для размещения объявлений
 
 const typesRus = { // русифицируем типы жилья
   flat: 'Квартира',
@@ -14,11 +14,10 @@ const typesRus = { // русифицируем типы жилья
 
 const similarAnnouncements = getAnnouncements();  // генерируем массив с данными для 10 объявлений
 
-const renderTest = function(announcement) {
+const renderTest = (announcement) => {
   const announcementCard = card.cloneNode(true);  // клонируем шаблон
 
   const offerTitle = announcementCard.querySelector('.popup__title');  // заголовок
-  const offerAddress = announcementCard.querySelector('.popup__text--address'); // адрес
   const offerPrice = announcementCard.querySelector('.popup__text--price'); // цена
   const offerType = announcementCard.querySelector('.popup__type'); // тип жилья
   const offerCapacity = announcementCard.querySelector('.popup__text--capacity'); // вместимость
@@ -31,7 +30,6 @@ const renderTest = function(announcement) {
   const authorAvatar = announcementCard.querySelector('.popup__avatar'); // аватар автора
 
   offerTitle.textContent = announcement.offer.title;
-  offerAddress.textContent = announcement.offer.address;
   offerPrice.textContent = `${announcement.offer.price} ₽/ночь`;
   offerType.textContent = typesRus[announcement.offer.type];
   offerCapacity.textContent = `${announcement.offer.rooms} комнаты для ${announcement.offer.guests} гостей`;
@@ -50,6 +48,9 @@ const renderTest = function(announcement) {
   });
 
   offerDescription.textContent = announcement.offer.description;
+  if (offerDescription.textContent === '') {  // проверка на пустоту содержания
+    offerDescription.classList.add('visually-hidden');
+  }
 
   announcement.offer.photos.forEach((urlPhoto) => { // фото
     const singlePhoto = offerPhoto.cloneNode(true);
@@ -58,14 +59,50 @@ const renderTest = function(announcement) {
   });
 
   authorAvatar.src = announcement.author.avatar;  // меняем аватарку
-
-  for (let i = 0; i < announcementCard.children.length; i++) {  // скрываем блоки, не имеющие содержания
-    if (announcementCard.children[i] === null) {
-      announcementCard.children[i].classList.add('visually-hidden');
-    }
+  if (authorAvatar.src === 'http://localhost:3000/') {  // проверка на пустоту содержания
+    authorAvatar.classList.add('visually-hidden');
   }
 
-  mapCanvas.appendChild(announcementCard);  // добавляем объявление в контейнер
+  return announcementCard;
+
+  //mapCanvas.appendChild(announcementCard);  // добавляем объявление в контейнер
 };
 
-renderTest(similarAnnouncements[0]);
+export {similarAnnouncements, renderTest};
+
+/*
+const points = [
+  {
+    title: 'Футура',
+    lat: 59.96925,
+    lng: 30.31730,
+  },
+  {
+    title: 'Шаверма',
+    lat: 59.96783,
+    lng: 30.31258,
+  },
+  {
+    title: 'Франк',
+    lat: 59.95958,
+    lng: 30.30228,
+  },
+  {
+    title: 'Ginza',
+    lat: 59.97292,
+    lng: 30.31982,
+  },
+];
+
+const renderTest = (points) => {
+  const announcementCard = card.cloneNode(true);  // клонируем шаблон
+
+  const offerTitle = announcementCard.querySelector('.popup__title');  // заголовок
+  const offerDescription = announcementCard.querySelector('.popup__description'); // описание
+
+  offerTitle.textContent = announcement.offer.title;
+  offerDescription.textContent = announcement.offer.description;
+
+  }
+
+  return announcementCard;*/
