@@ -1,6 +1,6 @@
+import './get-data.js';
 import './form-activation.js';
-import './data.js';
 import './markup-generation.js';
-import './form-validation.js';
 import './map.js';
-//import './../leaflet/leaflet.js';
+import './form-validation.js';
+import './form-sending.js';
