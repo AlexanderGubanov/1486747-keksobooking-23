@@ -1,10 +1,17 @@
 import { deactivatePage } from './form-activation.js';
 import { activatePage } from './form-activation.js';
-import { similarAnnouncements, renderTest } from './markup-generation.js';
+import { renderAnnouncement } from './markup-generation.js';
+import { createFetch } from './get-data.js';
+import { setAddress } from './util.js';
+
 deactivatePage();
 
-const address = document.querySelector('#address'); // адрес
+const adForm = document.querySelector('.ad-form');
+const address = adForm.querySelector('#address');
+
 const resetButton = document.querySelector('.ad-form__reset');
+
+const SIMILAR_ANNOUNCEMENT_COUNT = 10;
 
 const map = L.map('map-canvas').on('load', () => {
   activatePage();
@@ -39,9 +46,9 @@ const mainPinMarker = L.marker(
   },
 );
 
-address.value = '35.68950, 139.69200';
+setAddress();
 
-mainPinMarker.addTo(map);
+mainPinMarker.addTo(map); // добавляем главную метку на карту
 
 // передаем новые координаты главной метки в поле "адрес"
 mainPinMarker.on('moveend', (evt) => {
@@ -52,15 +59,7 @@ mainPinMarker.on('moveend', (evt) => {
 
 // возвращение метки и карты в изначальное положение после нажатия кнопки "очистить"
 resetButton.addEventListener('click', () => {
-  mainPinMarker.setLatLng({
-    lat: 35.6895,
-    lng: 139.692,
-  });
-
-  map.setView({
-    lat: 35.6895,
-    lng: 139.692,
-  }, 10);
+  setTimeout(setAddress, 100);
 });
 
 // наносим на карту метки с баллунами
@@ -73,9 +72,18 @@ const createMarker = (announcement) => {
 
   const marker = L.marker(announcement.location, {icon});
 
-  marker.addTo(map).bindPopup(renderTest(announcement), {keepInView: true});
+  marker.addTo(map).bindPopup(renderAnnouncement(announcement), {keepInView: true});
 };
 
-similarAnnouncements.forEach((announcement) => {
-  createMarker(announcement);
-});
+const fetchAnnouncements = createFetch(
+  (announcements) => {
+    const similarAnnouncements = announcements.slice(0, SIMILAR_ANNOUNCEMENT_COUNT);
+    similarAnnouncements.forEach((announcement) => {
+      createMarker(announcement);
+    });
+  },
+  (err) => {
+    console.log(err);
+  });
+
+fetchAnnouncements();

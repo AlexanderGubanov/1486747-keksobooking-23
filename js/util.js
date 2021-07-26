@@ -1,44 +1,68 @@
+const main = document.querySelector('main');
+const adForm = main.querySelector('.ad-form');
+const address = adForm.querySelector('#address');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const errorButton = errorTemplate.querySelector('.error-button');
+const errorGetdataTemplate = document.querySelector('#error-getdata').content.querySelector('.error');
 
-const getRandomInteger = function(min, max) {
-  if (min >= 0 && min < max) {
-    const result = min - 0.5 + Math.random() * (max - min + 1);
-    return Math.round(result);
-  }
-  throw new Error('Диапазон значений указан неправильно');
+const successModal = successTemplate.cloneNode(true);
+const errorModal = errorTemplate.cloneNode(true);
+const errorGetData = errorGetdataTemplate.cloneNode(true);
+
+const setAddress = () => {
+  address.value = '35.68950, 139.69200';
 };
 
-// Источник формулы для расчета переменной result: https://learn.javascript.ru/task/random-int-min-max
+const formSentSuccess = () => {
+  adForm.reset();
+  setTimeout(setAddress, 100);
+  main.appendChild(successModal);
 
-const getRandomFloatNumber = function(min, max, numberDecimals) {
-  if (min >= 0 && min < max) {
-    let result = Math.random() * (max - min) + min;
-    result = parseFloat(result.toFixed(numberDecimals));
-    return result;
-  }
-  throw new Error('Диапазон значений указан неправильно');
-};
+  successModal.addEventListener('click', () => {
+    successModal.remove();
+  });
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-const getRandomNonrepeatingElement = (elements) => {
-  const randomInteger = getRandomInteger(0, elements.length);
-  return elements.splice(randomInteger, 1).join();
-};
-
-const getRandomLengthArray = (elements) => {
-  const maxLength = elements.length;
-  const randomLength = getRandomInteger(1, maxLength);
-  const randomArray = [];
-
-  while (randomArray.length < randomLength) {
-    const elementsIndex = getRandomInteger(0, maxLength - 1);
-    const element = elements[elementsIndex];
-
-    if (!randomArray.includes(element)) {
-      randomArray.push(element);
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      successModal.remove();
     }
-  }
-  return randomArray;
+  });
 };
 
-export {getRandomInteger, getRandomFloatNumber, getRandomArrayElement, getRandomNonrepeatingElement, getRandomLengthArray};
+const formSentError = () => {
+  main.appendChild(errorModal);
+
+  errorModal.addEventListener('click', () => {
+    errorModal.remove();
+  });
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      errorModal.remove();
+    }
+  });
+
+  errorButton.addEventListener('click', () => {
+    errorModal.remove();
+  });
+};
+
+const getDataError = () => {
+  main.appendChild(errorGetData);
+
+  errorGetData.addEventListener('click', () => {
+    errorGetData.remove();
+  });
+
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape' || evt.key === 'Esc') {
+      evt.preventDefault();
+      errorGetData.remove();
+    }
+  });
+};
+
+export {setAddress, formSentSuccess, formSentError, getDataError};

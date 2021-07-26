@@ -20,18 +20,6 @@ const MIN_PRICE = {
   palace: 10000,
 };
 
-/*
-const adForm = document.querySelector('.ad-form');
-
-adForm.addEventListener('submit', function(evt) {
-  evt.preventDefoult();
-  if () {
-    вывод сообщения об ошибке
-  }
-  this.submit();
-});
-*/
-
 // валидация заголовка
 titleAnnouncement.addEventListener('input', () => {
   const titleLength = titleAnnouncement.value.length;
@@ -112,12 +100,3 @@ typeOfHousing.addEventListener('change', () => {
   pricePerNight.setAttribute('min', selectedType);
   pricePerNight.setAttribute('placeholder', selectedType);
 });
-
-/*;
-const ROOMS_GUESTS_BIJECTION = {
-  1: [1],
-  2: [1, 2],
-  3: [1, 2, 3],
-  100: [0],
-};
-}*/
